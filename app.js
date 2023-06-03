@@ -1,10 +1,13 @@
+require("dotenv").config();
 const express = require("express");
+const hbs = require("hbs");
+
 const app = express();
+const port = process.env.PORT;
 
-const port = 8080;
-
-// TODO: require('hbs'))
+// Handlebars
 app.set("view engine", "hbs");
+hbs.registerPartials(__dirname + "/views/partials");
 
 // Servir contenido estático
 app.use(express.static("public"));
@@ -20,16 +23,31 @@ app.get("/", function (req, res) {
   });
 });
 
+// Para uso de html directo
 // app.get("/", function (req, res) {
 //   res.sendFile(__dirname + "/public/index.html");
 // });
 
+// app.get("/generic", function (req, res) {
+//   res.sendFile(__dirname + "/public/generic.html");
+// });
+
+// app.get("/elements", function (req, res) {
+//   res.sendFile(__dirname + "/public/elements.html");
+// });
+
 app.get("/generic", function (req, res) {
-  res.sendFile(__dirname + "/public/generic.html");
+  res.render("generic", {
+    nombre: "Yandiel",
+    titulo: "Curso de NodeJS",
+  });
 });
 
 app.get("/elements", function (req, res) {
-  res.sendFile(__dirname + "/public/elements.html");
+  res.render("elements", {
+    nombre: "Yandiel",
+    titulo: "Curso de NodeJS",
+  });
 });
 
 // Para cualquier ruta no mapeada
